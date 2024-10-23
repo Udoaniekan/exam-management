@@ -2,7 +2,8 @@
 /dist
 /node_modules
 /build
-
+/src/grade
+/src/exam
 # Logs
 logs
 *.log

@@ -4,12 +4,14 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SeederModule } from './user/adminseeder.module';
 import { AdminSeederService } from './user/admin.seederService';
+import { GradeModule } from './grade/grade.module';
+import { ExamModule } from './exam/examModule';
 
 @Module({
   imports: [
       ConfigModule.forRoot({ isGlobal: true }),
       MongooseModule.forRoot(process.env.DB_URI),
-      UserModule, SeederModule
+      UserModule, SeederModule, GradeModule
     ],
 })
 export class AppModule implements OnModuleInit {
