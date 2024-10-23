@@ -2,16 +2,18 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
   Param,
   Patch,
   Post,
+  Req,
   Request,
   Res,
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { LoginDto } from './dto/login.user';
+import { LoginDto } from './dto/loginDto.user';
 import { request, Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from './guard/roles.guard';
@@ -30,11 +32,9 @@ export class UserController {
 
   // Login route
   @Post('login')
-  async login(@Body() loginDto: LoginDto, @Res() res:Response) {
+  async login(@Body() loginDto: LoginDto, @Res() res: Response) {
     return this.userService.login(loginDto, res);
   }
-
-  
 
   @Get('profile')
   @UseGuards(AuthGuard())
@@ -46,14 +46,26 @@ export class UserController {
   @Get('get-all')
   @UseGuards(AuthGuard(), RolesGuard)
   @Roles(UserRole.SUPERADMIN)
-  findAll(){
-    return this.userService.getAllUsers()
+  findAll() {
+    return this.userService.getAllUsers();
   }
 
   @Patch('update-role/:userId')
   @UseGuards(AuthGuard(), RolesGuard)
   @Roles(UserRole.SUPERADMIN)
-  async updateRole(@Param('userId') userId: string, @Body() updateRoleDto: UpdateRoleDto) {
+  async updateRole(
+    @Param('userId') userId: string,
+    @Body() updateRoleDto: UpdateRoleDto,
+  ) {
     return this.userService.updateRole(userId, updateRoleDto);
+  }
+
+  @HttpCode(200)
+  @Post('logout')
+  async logout(
+    @Res()
+    res: Response,
+  ) {
+    return await this.userService.logout(res);
   }
 }

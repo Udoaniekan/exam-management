@@ -1,10 +1,10 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { PassportStrategy } from "@nestjs/passport";
-import { ExtractJwt, Strategy } from "passport-jwt";
-import { UserService } from "../user.service";
-import { User } from "../schema/user.schema";
-import { JwtPayload } from "../jwt.payload";
-import { ConfigService } from "@nestjs/config";
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import { UserService } from '../user.service';
+import { User } from '../schema/user.schema';
+import { JwtPayload } from '../jwt.payload';
+import { ConfigService } from '@nestjs/config';
 
 // @Injectable()
 // export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
@@ -29,7 +29,7 @@ import { ConfigService } from "@nestjs/config";
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private readonly userService: UserService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Extract token from Bearer header
