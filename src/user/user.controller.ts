@@ -24,7 +24,7 @@ import { UpdateRoleDto } from './dto/update.dto';
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
+//signup route
   @Post('signup')
   async signUp(@Body() createUserDto: CreateUserDto) {
     return this.userService.signUp(createUserDto);
@@ -35,7 +35,7 @@ export class UserController {
   async login(@Body() loginDto: LoginDto, @Res() res: Response) {
     return this.userService.login(loginDto, res);
   }
-
+// Get user profile route (only accessible to authenticated users)
   @Get('profile')
   @UseGuards(AuthGuard())
   getProfile(@Request() req) {
@@ -43,13 +43,14 @@ export class UserController {
     return req.user; // Return the authenticated user's details
   }
 
+  // Get all users route (only accessible to super admins)
   @Get('get-all')
   @UseGuards(AuthGuard(), RolesGuard)
   @Roles(UserRole.SUPERADMIN)
   findAll() {
     return this.userService.getAllUsers();
   }
-
+// Update user role route (only accessible to super admins)
   @Patch('update-role/:userId')
   @UseGuards(AuthGuard(), RolesGuard)
   @Roles(UserRole.SUPERADMIN)
@@ -59,7 +60,7 @@ export class UserController {
   ) {
     return this.userService.updateRole(userId, updateRoleDto);
   }
-
+// Logout route (only accessible to authenticated users)
   @HttpCode(200)
   @Post('logout')
   async logout(
