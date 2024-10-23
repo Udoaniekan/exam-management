@@ -22,5 +22,4 @@ export class AppModule implements OnModuleInit {
     await this.AdminSeederService.seedAdmin();
   }
 }
-// export class AppModule {}
 
