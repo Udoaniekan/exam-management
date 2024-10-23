@@ -133,7 +133,7 @@ export class UserService {
   }
 
   async findUserById(userId: string): Promise<User | null> {
-    return this.userModel.findById(userId).exec(); // Fetch the user by ID from MongoDB
+    return this.userModel.findById(userId).exec(); // Fetching the user by ID from MongoDB
   }
 
   async getAllUsers() {
