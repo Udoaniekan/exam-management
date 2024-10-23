@@ -4,7 +4,7 @@
 /build
 /src/grade
 /src/exam
-.env
+
 # Logs
 logs
 *.log
