@@ -20,6 +20,7 @@ import { RolesGuard } from './guard/roles.guard';
 import { Roles } from './guard/roles';
 import { UserRole } from './enum/enum';
 import { UpdateRoleDto } from './dto/update.dto';
+import { BlockGuard } from './guard/blockGuard';
 
 @Controller('user')
 export class UserController {
@@ -37,7 +38,7 @@ export class UserController {
   }
 // Get user profile route (only accessible to authenticated users)
   @Get('profile')
-  @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard(), BlockGuard)
   getProfile(@Request() req) {
     console.log(req.user);
     return req.user; // Return the authenticated user's details
@@ -69,4 +70,17 @@ export class UserController {
   ) {
     return await this.userService.logout(res);
   }
+
+  @UseGuards(AuthGuard(), BlockGuard)
+  @Roles(UserRole.SUPERADMIN)
+@Post('blockuser/:id')
+async blockUser(@Param('id') id:string){
+  return await this.userService.blockUser(id)
+}
+
+@UseGuards(AuthGuard(), BlockGuard)
+@Post('unblockuser/:id')
+async unblockUser(@Param('id') id:string){
+  return await this.userService.unblockUser(id)
+}
 }

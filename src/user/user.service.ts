@@ -1,6 +1,7 @@
 import {
   HttpException,
   Injectable,
+  NotFoundException,
   Req,
   Res,
   UnauthorizedException,
@@ -62,6 +63,9 @@ export class UserService {
 
     if (!isMatch) {
       throw new HttpException('Invalid credentials', 404); 
+    }
+    if (user.isBlocked === true) {
+      throw new HttpException('This user is banned', 404); 
     }
 
     
@@ -163,4 +167,25 @@ export class UserService {
       response,
     };
   }
+
+  async blockUser(id:string){
+    const findUser = await this.userModel.findById(id)
+    if (!findUser){
+      throw new NotFoundException('user not yea found')
+    }
+    findUser.isBlocked = true;
+    await findUser.save()
+    return findUser
+  }
+
+  async unblockUser(id:string){
+    const findUser = await this.userModel.findById(id)
+    if (!findUser){
+      throw new NotFoundException('user not found')
+    }
+    findUser.isBlocked = false;
+    await findUser.save()
+    return findUser
+  }
+
 }

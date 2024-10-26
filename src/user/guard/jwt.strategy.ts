@@ -6,25 +6,7 @@ import { User } from '../schema/user.schema';
 import { JwtPayload } from '../jwt.payload';
 import { ConfigService } from '@nestjs/config';
 
-// @Injectable()
-// export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
-//     constructor(private userService:UserService)  {
-//         super({
-//             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-//             ignoreExpiration: false,
-//             secretOrKey: process.env.JWT_SECRET,
-//         });
-//     }
 
-//     async validate (payload: {email}):Promise<User> {
-//         const {email} = payload;
-//         const user = await this.userService.findEmail(email);
-//         if(!user){
-//             throw new UnauthorizedException('Login first to access this endpoint')
-//         }
-//         return user;
-//     }
-// }
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(

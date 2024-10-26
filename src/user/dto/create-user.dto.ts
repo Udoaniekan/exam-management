@@ -1,13 +1,11 @@
 import {
   IsEmail,
   IsNotEmpty,
-  IsOptional,
   IsString,
   Matches,
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { UserRole } from '../enum/enum';
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -32,7 +30,4 @@ export class CreateUserDto {
   @IsEmail()
   email: string;
 
-  @IsOptional()
-  @IsString()
-  role: UserRole;
 }
